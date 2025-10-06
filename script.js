@@ -581,116 +581,113 @@ let passages = [
 
 ];
 
-// Track current passage
-let currentIndex = 0;
-let shuffledIndexes = [];
-let answeredPassages = [];
+document.addEventListener('DOMContentLoaded', () => {
 
-// DOM elements
-const startBtn = document.getElementById('startBtn');
-const audioContainer = document.getElementById('audioContainer');
-const audioPlayer = document.getElementById('audioPlayer');
-const replayBtn = document.getElementById('replayBtn');
-const questionContainer = document.getElementById('questionContainer');
-const questionText = document.getElementById('questionText');
-const optionsContainer = document.getElementById('optionsContainer');
-const nextBtn = document.getElementById('nextBtn');
-const transcriptContainer = document.getElementById('transcriptContainer');
-const transcriptText = document.getElementById('transcriptText');
+  // Track current passage
+  let currentIndex = 0;
+  let shuffledIndexes = [];
+  let answeredPassages = [];
 
-// Initialize shuffled indexes
-function shuffleIndexes() {
-  shuffledIndexes = Array.from({ length: passages.length }, (_, i) => i);
-  for (let i = shuffledIndexes.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledIndexes[i], shuffledIndexes[j]] = [shuffledIndexes[j], shuffledIndexes[i]];
-  }
-}
+  // DOM elements
+  const startBtn = document.getElementById('startBtn');
+  const audioContainer = document.getElementById('audioContainer');
+  const audioPlayer = document.getElementById('audioPlayer');
+  const replayBtn = document.getElementById('replayBtn');
+  const questionContainer = document.getElementById('questionContainer');
+  const questionText = document.getElementById('questionText');
+  const optionsContainer = document.getElementById('optionsContainer');
+  const nextBtn = document.getElementById('nextBtn');
+  const transcriptContainer = document.getElementById('transcriptContainer');
+  const transcriptText = document.getElementById('transcriptText');
 
-// Load passage
-function loadPassage() {
-  if (shuffledIndexes.length === 0) {
-    // Refill and reshuffle if all passages used
-    shuffleIndexes();
-    answeredPassages = [];
+  // Initialize shuffled indexes
+  function shuffleIndexes() {
+    shuffledIndexes = Array.from({ length: passages.length }, (_, i) => i);
+    for (let i = shuffledIndexes.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledIndexes[i], shuffledIndexes[j]] = [shuffledIndexes[j], shuffledIndexes[i]];
+    }
   }
 
-  currentIndex = shuffledIndexes.shift();
-  answeredPassages.push(currentIndex);
-  const passage = passages[currentIndex];
-
-  // Set audio (simulate TTS audio with placeholder if real mp3 not available)
-  audioPlayer.src = ""; // Replace with real audio file if available
-  audioContainer.style.display = "block";
-  audioPlayer.playbackRate = 0.9; // slower audio
-  audioPlayer.load();
-  audioPlayer.play();
-
-  // Hide questions and transcript until ready
-  questionContainer.style.display = "none";
-  transcriptContainer.style.display = "none";
-
-  // Setup next button
-  nextBtn.disabled = true;
-
-  // Once audio ends, show questions
-  audioPlayer.onended = () => {
-    showQuestions(passage);
-  };
-}
-
-// Show questions
-function showQuestions(passage) {
-  questionContainer.style.display = "block";
-  questionText.textContent = "";
-  optionsContainer.innerHTML = "";
-
-  let questionIndex = 0;
-
-  function showNextQuestion() {
-    if (questionIndex >= passage.questions.length) {
-      // All questions done
-      questionContainer.style.display = "none";
-      transcriptText.textContent = passage.transcript;
-      transcriptContainer.style.display = "block";
-      return;
+  // Load passage
+  function loadPassage() {
+    if (shuffledIndexes.length === 0) {
+      shuffleIndexes();
+      answeredPassages = [];
     }
 
-    const q = passage.questions[questionIndex];
-    questionText.textContent = q.q;
-    optionsContainer.innerHTML = "";
+    currentIndex = shuffledIndexes.shift();
+    answeredPassages.push(currentIndex);
+    const passage = passages[currentIndex];
 
-    q.options.forEach((opt, i) => {
-      const btn = document.createElement('button');
-      btn.textContent = opt;
-      btn.onclick = () => {
-        questionIndex++;
-        showNextQuestion();
-      };
-      optionsContainer.appendChild(btn);
-    });
+    audioPlayer.src = ""; // Replace with actual audio file if available
+    audioContainer.style.display = "block";
+    audioPlayer.playbackRate = 0.9;
+    audioPlayer.load();
+    audioPlayer.play();
+
+    questionContainer.style.display = "none";
+    transcriptContainer.style.display = "none";
+
+    nextBtn.disabled = true;
+
+    audioPlayer.onended = () => {
+      showQuestions(passage);
+    };
   }
 
-  showNextQuestion();
-}
+  // Show questions
+  function showQuestions(passage) {
+    questionContainer.style.display = "block";
+    questionText.textContent = "";
+    optionsContainer.innerHTML = "";
 
-// Event listeners
-startBtn.addEventListener('click', () => {
-  startBtn.style.display = "none";
-  loadPassage();
-});
+    let questionIndex = 0;
 
-replayBtn.addEventListener('click', () => {
-  audioPlayer.currentTime = 0;
-  audioPlayer.play();
-});
+    function showNextQuestion() {
+      if (questionIndex >= passage.questions.length) {
+        questionContainer.style.display = "none";
+        transcriptText.textContent = passage.transcript;
+        transcriptContainer.style.display = "block";
+        return;
+      }
 
-nextBtn.addEventListener('click', () => {
-  loadPassage();
-});
+      const q = passage.questions[questionIndex];
+      questionText.textContent = q.q;
+      optionsContainer.innerHTML = "";
 
-// On load
-shuffleIndexes();
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.textContent = opt;
+        btn.onclick = () => {
+          questionIndex++;
+          showNextQuestion();
+        };
+        optionsContainer.appendChild(btn);
+      });
+    }
 
+    showNextQuestion();
+  }
+
+  // Event listeners
+  startBtn.addEventListener('click', () => {
+    startBtn.style.display = "none";
+    loadPassage();
+  });
+
+  replayBtn.addEventListener('click', () => {
+    audioPlayer.currentTime = 0;
+    audioPlayer.play();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    loadPassage();
+  });
+
+  // On load
+  shuffleIndexes();
+
+});  // <-- end of DOMContentLoaded wrapper
 
 
