@@ -36,21 +36,26 @@ const passages = [
 
 let current = 0;
 
-const playBtn = document.getElementById("play-audio");
 const showQuestionsBtn = document.getElementById("show-questions");
 const showTranscriptBtn = document.getElementById("show-transcript");
 const transcriptDiv = document.getElementById("transcript");
 const questionsDiv = document.getElementById("questions");
 const nextBtn = document.getElementById("next");
 
-function playAudio() {
-  const utterance = new SpeechSynthesisUtterance(passages[current].text);
-  utterance.lang = "es-ES"; // European Spanish voice
+function playAudio(passage, onEnd) {
+  const utterance = new SpeechSynthesisUtterance(passage.text);
+  utterance.lang = "es-ES";
+  utterance.onend = onEnd;
   speechSynthesis.speak(utterance);
-  showQuestionsBtn.classList.remove("hidden");
 }
 
-playBtn.onclick = playAudio;
+function startPassage() {
+  resetView();
+  const passage = passages[current];
+  playAudio(passage, () => {
+    showQuestionsBtn.classList.remove("hidden");
+  });
+}
 
 showQuestionsBtn.onclick = () => {
   const passage = passages[current];
@@ -95,7 +100,7 @@ nextBtn.onclick = () => {
     alert("¡Has completado todos los ejercicios!");
     current = 0;
   }
-  resetView();
+  startPassage();
 };
 
 function resetView() {
@@ -108,3 +113,6 @@ function resetView() {
   questionsDiv.innerHTML = "";
   speechSynthesis.cancel();
 }
+
+// Start automatically when page loads
+window.onload = startPassage;
