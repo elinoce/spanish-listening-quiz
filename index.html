@@ -5,63 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DELE Listening Practice (A1–A2)</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f9fb;
-      color: #222;
-      text-align: center;
-      padding: 20px;
-    }
-    #app {
-      max-width: 600px;
-      margin: auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    button {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin: 8px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    button:hover { background: #0056b3; }
-    .hidden { display: none; }
-    .question { margin: 10px 0; text-align: left; }
-    .answers button {
-      display: block;
-      width: 100%;
-      margin: 5px 0;
-      text-align: left;
-    }
-    #transcript {
-      background: #f0f0f0;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 8px;
-    }
-  </style>
 </head>
 <body>
-  <div id="app">
-    <h2>DELE Listening Practice (A1–A2)</h2>
-    <button id="start-btn">Comenzar</button>
+  <h1>DELE Listening Practice (A1–A2)</h1>
 
-    <div id="content" class="hidden">
-      <button id="repeat-audio" class="hidden">🔊 Repetir audio</button>
-      <button id="show-questions" class="hidden">Mostrar preguntas</button>
-      <div id="questions" class="hidden"></div>
-      <button id="show-transcript" class="hidden">Mostrar transcripción</button>
-      <div id="transcript" class="hidden"></div>
-    </div>
+  <!-- Start Button -->
+  <button id="startBtn">Comenzar</button>
 
-    <button id="next" class="hidden">➡️ Siguiente</button>
+  <!-- Audio Player -->
+  <div id="audioContainer" style="display:none;">
+    <audio id="audioPlayer" controls></audio>
+    <button id="replayBtn">Repetir Audio</button>
+  </div>
+
+  <!-- Questions Container -->
+  <div id="questionContainer" style="display:none;">
+    <div id="questionText"></div>
+    <div id="optionsContainer"></div>
+    <button id="nextBtn">Siguiente</button>
+  </div>
+
+  <!-- Transcript -->
+  <div id="transcriptContainer" style="display:none;">
+    <h3>Transcripción:</h3>
+    <p id="transcriptText"></p>
   </div>
 
   <script src="script.js"></script>
