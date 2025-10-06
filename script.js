@@ -577,30 +577,26 @@ let passages = [
       { q: "¿Cuánto tiempo permanecen?", options: ["Mañana", "Tarde", "No dice"], answer: 0 },
       { q: "¿Les gusta la playa?", options: ["Sí", "No", "No dice"], answer: 2 }
     ]
-  }
+  },
 
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
-
-  // Track current passage
   let currentIndex = 0;
   let shuffledIndexes = [];
   let answeredPassages = [];
 
-  // DOM elements
   const startBtn = document.getElementById('startBtn');
-  const audioContainer = document.getElementById('audioContainer');
-  const audioPlayer = document.getElementById('audioPlayer');
-  const replayBtn = document.getElementById('replayBtn');
   const questionContainer = document.getElementById('questionContainer');
   const questionText = document.getElementById('questionText');
   const optionsContainer = document.getElementById('optionsContainer');
   const nextBtn = document.getElementById('nextBtn');
   const transcriptContainer = document.getElementById('transcriptContainer');
   const transcriptText = document.getElementById('transcriptText');
+  const replayBtn = document.getElementById('replayBtn');
 
-  // Initialize shuffled indexes
+  let currentUtterance = null;
+
   function shuffleIndexes() {
     shuffledIndexes = Array.from({ length: passages.length }, (_, i) => i);
     for (let i = shuffledIndexes.length - 1; i > 0; i--) {
@@ -609,7 +605,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Load passage
+  function speakPassage(passage) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(passage.text);
+      utterance.lang = 'es-ES';
+      utterance.rate = 0.9;
+      window.speechSynthesis.speak(utterance);
+      return utterance;
+    } else {
+      alert("Su navegador no soporta Text-to-Speech.");
+      return null;
+    }
+  }
+
   function loadPassage() {
     if (shuffledIndexes.length === 0) {
       shuffleIndexes();
@@ -620,23 +629,17 @@ document.addEventListener('DOMContentLoaded', () => {
     answeredPassages.push(currentIndex);
     const passage = passages[currentIndex];
 
-    audioPlayer.src = ""; // Replace with actual audio file if available
-    audioContainer.style.display = "block";
-    audioPlayer.playbackRate = 0.9;
-    audioPlayer.load();
-    audioPlayer.play();
-
     questionContainer.style.display = "none";
     transcriptContainer.style.display = "none";
 
-    nextBtn.disabled = true;
-
-    audioPlayer.onended = () => {
-      showQuestions(passage);
-    };
+    currentUtterance = speakPassage(passage);
+    if (currentUtterance) {
+      currentUtterance.onend = () => {
+        showQuestions(passage);
+      };
+    }
   }
 
-  // Show questions
   function showQuestions(passage) {
     questionContainer.style.display = "block";
     questionText.textContent = "";
@@ -649,6 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
         questionContainer.style.display = "none";
         transcriptText.textContent = passage.transcript;
         transcriptContainer.style.display = "block";
+        nextBtn.disabled = false;
         return;
       }
 
@@ -656,7 +660,7 @@ document.addEventListener('DOMContentLoaded', () => {
       questionText.textContent = q.q;
       optionsContainer.innerHTML = "";
 
-      q.options.forEach((opt, i) => {
+      q.options.forEach((opt) => {
         const btn = document.createElement('button');
         btn.textContent = opt;
         btn.onclick = () => {
@@ -670,24 +674,24 @@ document.addEventListener('DOMContentLoaded', () => {
     showNextQuestion();
   }
 
-  // Event listeners
   startBtn.addEventListener('click', () => {
     startBtn.style.display = "none";
     loadPassage();
   });
 
   replayBtn.addEventListener('click', () => {
-    audioPlayer.currentTime = 0;
-    audioPlayer.play();
+    if (currentIndex !== null) {
+      speakPassage(passages[currentIndex]);
+    }
   });
 
   nextBtn.addEventListener('click', () => {
     loadPassage();
   });
 
-  // On load
   shuffleIndexes();
+});
 
-});  // <-- end of DOMContentLoaded wrapper
+
 
 
