@@ -45,7 +45,6 @@ const nextBtn = document.getElementById("next");
 function playAudio(passage, onEnd) {
   const utterance = new SpeechSynthesisUtterance(passage.text);
   utterance.lang = "es-ES";
-  utterance.rate = 0.8;
   utterance.onend = onEnd;
   speechSynthesis.speak(utterance);
 }
