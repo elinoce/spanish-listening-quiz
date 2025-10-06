@@ -579,7 +579,7 @@ let passages = [
     ]
   }
 
-]); 
+];
 
 // Track current passage
 let currentIndex = 0;
@@ -691,5 +691,6 @@ nextBtn.addEventListener('click', () => {
 
 // On load
 shuffleIndexes();
+
 
 
