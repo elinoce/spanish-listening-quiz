@@ -31,9 +31,14 @@
       cursor: pointer;
       transition: background 0.2s;
     }
-    button:hover { background: #0056b3; }
+    button:hover {
+      background: #0056b3;
+    }
     .hidden { display: none; }
-    .question { margin: 10px 0; text-align: left; }
+    .question {
+      margin: 10px 0;
+      text-align: left;
+    }
     .answers button {
       display: block;
       width: 100%;
@@ -46,33 +51,17 @@
       margin-top: 10px;
       border-radius: 8px;
     }
-    #speed-controls button {
-      background: #6c757d;
-    }
-    #speed-controls button.active {
-      background: #198754;
-    }
   </style>
 </head>
 <body>
   <div id="app">
     <h2>DELE Listening Practice (A1–A2)</h2>
-
-    <!-- 🔹 New: Speed Control -->
-    <div id="speed-controls">
-      <span>Velocidad:</span>
-      <button data-rate="0.6">Lento</button>
-      <button data-rate="0.8" class="active">Normal</button>
-      <button data-rate="1.0">Rápido</button>
-    </div>
-
     <div id="content">
       <button id="show-questions" class="hidden">Mostrar preguntas</button>
       <div id="questions" class="hidden"></div>
       <button id="show-transcript" class="hidden">Mostrar transcripción</button>
       <div id="transcript" class="hidden"></div>
     </div>
-
     <button id="next" class="hidden">➡️ Siguiente</button>
   </div>
 
