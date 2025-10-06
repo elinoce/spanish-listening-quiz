@@ -612,7 +612,7 @@ let passages = [
       window.speechSynthesis.cancel();
       currentUtterance = new SpeechSynthesisUtterance(passages[index].text);
       currentUtterance.lang = 'es-ES';
-      currentUtterance.rate = 0.9; // slightly slower for comprehension
+      currentUtterance.rate = 0.8; // slightly slower for comprehension
       window.speechSynthesis.speak(currentUtterance);
     } else {
       alert("Su navegador no soporta Text-to-Speech.");
@@ -696,3 +696,4 @@ let passages = [
   // ------------------- INITIALIZE -------------------
   shuffleIndexes();
 });
+
