@@ -20,17 +20,6 @@ const passages = [
       { q: "¿Dónde trabaja Pedro?", options: ["En su tienda", "En una escuela", "En una oficina"], answer: 0 },
       { q: "¿Hasta qué hora trabaja?", options: ["Hasta las tres", "Hasta las dos", "Hasta el mediodía"], answer: 1 }
     ]
-  },
-  {
-    text: "Laura estudia medicina en la universidad. Tiene clases por la mañana y por la tarde trabaja en una librería. En su tiempo libre le gusta ver películas o pasear por el parque con sus amigos.",
-    transcript: "Laura estudia medicina en la universidad. Tiene clases por la mañana y por la tarde trabaja en una librería. En su tiempo libre le gusta ver películas o pasear por el parque con sus amigos.",
-    questions: [
-      { q: "¿Qué estudia Laura?", options: ["Derecho", "Medicina", "Historia"], answer: 1 },
-      { q: "¿Cuándo trabaja?", options: ["Por la mañana", "Por la tarde", "Por la noche"], answer: 1 },
-      { q: "¿Dónde trabaja Laura?", options: ["En un hospital", "En una librería", "En una cafetería"], answer: 1 },
-      { q: "¿Qué hace en su tiempo libre?", options: ["Ve películas o pasea", "Estudia todo el día", "Viaja mucho"], answer: 0 },
-      { q: "¿Con quién pasea Laura?", options: ["Con su familia", "Con sus amigos", "Con su perro"], answer: 1 }
-    ]
   }
 ];
 
@@ -43,18 +32,14 @@ const transcriptDiv = document.getElementById("transcript");
 const questionsDiv = document.getElementById("questions");
 const nextBtn = document.getElementById("next");
 
-startBtn.onclick = () => {
-  startBtn.classList.add("hidden");
-  document.getElementById("content").classList.remove("hidden");
-  startPassage();
-};
-
 function playAudio(passage, onEnd) {
+  // Cancel any existing speech
+  speechSynthesis.cancel();
+
   const utterance = new SpeechSynthesisUtterance(passage.text);
   utterance.lang = "es-ES";
-  utterance.rate = 0.8; // Slightly slower for A1–A2 listening
+  utterance.rate = 0.8; // slightly slower
   utterance.onend = onEnd;
-  speechSynthesis.cancel();
   speechSynthesis.speak(utterance);
 }
 
@@ -65,6 +50,12 @@ function startPassage() {
     showQuestionsBtn.classList.remove("hidden");
   });
 }
+
+startBtn.addEventListener("click", () => {
+  startBtn.classList.add("hidden");
+  document.getElementById("content").classList.remove("hidden");
+  startPassage();
+});
 
 showQuestionsBtn.onclick = () => {
   const passage = passages[current];
