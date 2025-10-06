@@ -20,25 +20,33 @@ const passages = [
       { q: "¿Dónde trabaja Pedro?", options: ["En su tienda", "En una escuela", "En una oficina"], answer: 0 },
       { q: "¿Hasta qué hora trabaja?", options: ["Hasta las tres", "Hasta las dos", "Hasta el mediodía"], answer: 1 }
     ]
+  },
+  {
+    text: "Laura estudia medicina en la universidad. Tiene clases por la mañana y por la tarde trabaja en una librería. En su tiempo libre le gusta ver películas o pasear por el parque con sus amigos.",
+    transcript: "Laura estudia medicina en la universidad. Tiene clases por la mañana y por la tarde trabaja en una librería. En su tiempo libre le gusta ver películas o pasear por el parque con sus amigos.",
+    questions: [
+      { q: "¿Qué estudia Laura?", options: ["Derecho", "Medicina", "Historia"], answer: 1 },
+      { q: "¿Cuándo trabaja?", options: ["Por la mañana", "Por la tarde", "Por la noche"], answer: 1 },
+      { q: "¿Dónde trabaja Laura?", options: ["En un hospital", "En una librería", "En una cafetería"], answer: 1 },
+      { q: "¿Qué hace en su tiempo libre?", options: ["Ve películas o pasea", "Estudia todo el día", "Viaja mucho"], answer: 0 },
+      { q: "¿Con quién pasea Laura?", options: ["Con su familia", "Con sus amigos", "Con su perro"], answer: 1 }
+    ]
   }
 ];
 
 let current = 0;
-let speechRate = 0.8; // Default: Normal speed
 
 const showQuestionsBtn = document.getElementById("show-questions");
 const showTranscriptBtn = document.getElementById("show-transcript");
 const transcriptDiv = document.getElementById("transcript");
 const questionsDiv = document.getElementById("questions");
 const nextBtn = document.getElementById("next");
-const speedButtons = document.querySelectorAll("#speed-controls button");
 
 function playAudio(passage, onEnd) {
   const utterance = new SpeechSynthesisUtterance(passage.text);
   utterance.lang = "es-ES";
-  utterance.rate = speechRate; // Use selected speed
+  utterance.rate = 0.8;
   utterance.onend = onEnd;
-  speechSynthesis.cancel();
   speechSynthesis.speak(utterance);
 }
 
@@ -106,15 +114,6 @@ function resetView() {
   questionsDiv.innerHTML = "";
   speechSynthesis.cancel();
 }
-
-// 🔹 Speed control buttons
-speedButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    speedButtons.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    speechRate = parseFloat(btn.dataset.rate);
-  });
-});
 
 // Start automatically when page loads
 window.onload = startPassage;
