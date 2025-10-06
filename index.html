@@ -31,14 +31,9 @@
       cursor: pointer;
       transition: background 0.2s;
     }
-    button:hover {
-      background: #0056b3;
-    }
+    button:hover { background: #0056b3; }
     .hidden { display: none; }
-    .question {
-      margin: 10px 0;
-      text-align: left;
-    }
+    .question { margin: 10px 0; text-align: left; }
     .answers button {
       display: block;
       width: 100%;
@@ -56,12 +51,14 @@
 <body>
   <div id="app">
     <h2>DELE Listening Practice (A1–A2)</h2>
+
     <div id="content">
       <button id="show-questions" class="hidden">Mostrar preguntas</button>
       <div id="questions" class="hidden"></div>
       <button id="show-transcript" class="hidden">Mostrar transcripción</button>
       <div id="transcript" class="hidden"></div>
     </div>
+
     <button id="next" class="hidden">➡️ Siguiente</button>
   </div>
 
