@@ -45,6 +45,7 @@ const nextBtn = document.getElementById("next");
 function playAudio(passage, onEnd) {
   const utterance = new SpeechSynthesisUtterance(passage.text);
   utterance.lang = "es-ES";
+  utterance.rate = 0.8; // Slow down to 80% of normal speed (ideal for A1–A2)
   utterance.onend = onEnd;
   speechSynthesis.speak(utterance);
 }
@@ -116,3 +117,4 @@ function resetView() {
 
 // Start automatically when page loads
 window.onload = startPassage;
+
