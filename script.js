@@ -1,3 +1,5 @@
+document.addEventListener('DOMContentLoaded', () => {
+  
 let passages = [
   // 1
   { text: "Ignacio va a la estación de tren para viajar a Madrid. Compra el billete y espera su tren en el andén.",
@@ -581,22 +583,22 @@ let passages = [
 
 ];
 
-document.addEventListener('DOMContentLoaded', () => {
-  let currentIndex = 0;
+  // ------------------- VARIABLES -------------------
+  let currentIndex = null;           // Current passage index
   let shuffledIndexes = [];
   let answeredPassages = [];
+  let currentUtterance = null;
 
   const startBtn = document.getElementById('startBtn');
+  const replayBtn = document.getElementById('replayBtn');
+  const nextBtn = document.getElementById('nextBtn');
   const questionContainer = document.getElementById('questionContainer');
   const questionText = document.getElementById('questionText');
   const optionsContainer = document.getElementById('optionsContainer');
-  const nextBtn = document.getElementById('nextBtn');
   const transcriptContainer = document.getElementById('transcriptContainer');
   const transcriptText = document.getElementById('transcriptText');
-  const replayBtn = document.getElementById('replayBtn');
 
-  let currentUtterance = null;
-
+  // ------------------- FUNCTIONS -------------------
   function shuffleIndexes() {
     shuffledIndexes = Array.from({ length: passages.length }, (_, i) => i);
     for (let i = shuffledIndexes.length - 1; i > 0; i--) {
@@ -605,17 +607,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function speakPassage(passage) {
+  function speakPassage(index) {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(passage.text);
-      utterance.lang = 'es-ES';
-      utterance.rate = 0.9;
-      window.speechSynthesis.speak(utterance);
-      return utterance;
+      currentUtterance = new SpeechSynthesisUtterance(passages[index].text);
+      currentUtterance.lang = 'es-ES';
+      currentUtterance.rate = 0.9; // slightly slower for comprehension
+      window.speechSynthesis.speak(currentUtterance);
     } else {
       alert("Su navegador no soporta Text-to-Speech.");
-      return null;
     }
   }
 
@@ -627,12 +627,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     currentIndex = shuffledIndexes.shift();
     answeredPassages.push(currentIndex);
-    const passage = passages[currentIndex];
 
+    const passage = passages[currentIndex];
     questionContainer.style.display = "none";
     transcriptContainer.style.display = "none";
+    nextBtn.disabled = true;
 
-    currentUtterance = speakPassage(passage);
+    // Speak the passage
+    speakPassage(currentIndex);
+
     if (currentUtterance) {
       currentUtterance.onend = () => {
         showQuestions(passage);
@@ -674,6 +677,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showNextQuestion();
   }
 
+  // ------------------- BUTTON EVENTS -------------------
   startBtn.addEventListener('click', () => {
     startBtn.style.display = "none";
     loadPassage();
@@ -681,7 +685,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   replayBtn.addEventListener('click', () => {
     if (currentIndex !== null) {
-      speakPassage(passages[currentIndex]);
+      speakPassage(currentIndex);
     }
   });
 
@@ -689,9 +693,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadPassage();
   });
 
+  // ------------------- INITIALIZE -------------------
   shuffleIndexes();
 });
-
-
-
-
