@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Spanish Listening Quiz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="app">
+    <h1>Spanish Listening Quiz</h1>
+    <p id="prompt">Press Play to hear a Spanish phrase and choose its meaning.</p>
+
+    <div id="controls">
+      <button id="play">🔊 Play phrase</button>
+      <button id="repeat">🔁 Repeat</button>
+      <button id="next" disabled>Next</button>
+      <div id="score">Score: 0 / 0</div>
+    </div>
+
+    <div id="choices" class="choices" aria-live="polite"></div>
+
+    <p style="margin-top:.8rem;color:#555;font-size:.9rem">
+      Tip: this demo uses your browser’s speech synthesis (no audio files). If your device’s browser supports Spanish voices it will sound more natural.
+    </p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
