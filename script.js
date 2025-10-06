@@ -35,7 +35,6 @@ const passages = [
 ];
 
 let current = 0;
-
 const showQuestionsBtn = document.getElementById("show-questions");
 const showTranscriptBtn = document.getElementById("show-transcript");
 const transcriptDiv = document.getElementById("transcript");
@@ -45,7 +44,9 @@ const nextBtn = document.getElementById("next");
 function playAudio(passage, onEnd) {
   const utterance = new SpeechSynthesisUtterance(passage.text);
   utterance.lang = "es-ES";
+  utterance.rate = 0.8; // default slower speed
   utterance.onend = onEnd;
+  speechSynthesis.cancel();
   speechSynthesis.speak(utterance);
 }
 
