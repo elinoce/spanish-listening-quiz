@@ -4,30 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DELE Listening Practice (A1–A2)</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: auto;
+      padding: 20px;
+    }
+    button {
+      margin: 5px;
+      padding: 10px 15px;
+      font-size: 16px;
+    }
+    #questionContainer, #transcriptContainer {
+      margin-top: 20px;
+      border-top: 1px solid #ccc;
+      padding-top: 15px;
+    }
+    #optionsContainer button {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+  </style>
 </head>
 <body>
+
   <h1>DELE Listening Practice (A1–A2)</h1>
 
-  <!-- Start Button -->
+  <!-- Removed the redundant top play button -->
+
   <button id="startBtn">Comenzar</button>
+  <button id="replayBtn">Repetir Audio</button>
+  <button id="nextBtn" disabled>Siguiente</button>
 
-  <!-- Audio Player -->
-  <div id="audioContainer" style="display:none;">
-    <audio id="audioPlayer" controls></audio>
-    <button id="replayBtn">Repetir Audio</button>
-  </div>
-
-  <!-- Questions Container -->
   <div id="questionContainer" style="display:none;">
-    <div id="questionText"></div>
+    <p id="questionText"></p>
     <div id="optionsContainer"></div>
-    <button id="nextBtn">Siguiente</button>
   </div>
 
-  <!-- Transcript -->
   <div id="transcriptContainer" style="display:none;">
-    <h3>Transcripción:</h3>
+    <h3>Transcripción</h3>
     <p id="transcriptText"></p>
   </div>
 
