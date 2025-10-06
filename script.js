@@ -705,3 +705,51 @@ if (document.readyState === 'loading') {
 } else {
   init();
 }
+
+// === Connect buttons to functions ===
+
+function playAudioForCurrentPassage() {
+  const utterance = new SpeechSynthesisUtterance(currentPassage.text);
+  utterance.lang = 'es-ES'; // European Spanish
+  speechSynthesis.speak(utterance);
+
+  // show the quiz after playing starts
+  document.getElementById('quiz-section').classList.remove('hidden');
+}
+
+function showNextQuestion() {
+  // your quiz question logic goes here
+}
+
+function loadNextPassage() {
+  // logic for cycling through passages
+  currentIndex++;
+  if (currentIndex >= passages.length) currentIndex = 0;
+  currentPassage = passages[currentIndex];
+  document.getElementById('transcript-section').classList.add('hidden');
+  document.getElementById('result-section').classList.add('hidden');
+  document.getElementById('quiz-section').classList.add('hidden');
+}
+
+// Play Audio
+document.getElementById('playAudio').addEventListener('click', () => {
+  playAudioForCurrentPassage();
+});
+
+// Next Question
+document.getElementById('nextQuestion').addEventListener('click', () => {
+  showNextQuestion();
+});
+
+// Show Transcript
+document.getElementById('showTranscript').addEventListener('click', () => {
+  document.getElementById('transcript-section').classList.remove('hidden');
+  document.getElementById('transcriptText').textContent = currentPassage.transcript;
+});
+
+// Next Passage
+document.getElementById('nextPassage').addEventListener('click', () => {
+  loadNextPassage();
+});
+
+
