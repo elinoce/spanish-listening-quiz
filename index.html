@@ -1,29 +1,38 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Spanish Listening Quiz</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DELE A1 Listening Practice</title>
+  <link href="style.css" rel="stylesheet" />
 </head>
-<body>
-  <main id="app">
-    <h1>Spanish Listening Quiz</h1>
-    <p id="prompt">Press Play to hear a Spanish phrase and choose its meaning.</p>
 
-    <div id="controls">
-      <button id="play">🔊 Play phrase</button>
-      <button id="repeat">🔁 Repeat</button>
-      <button id="next" disabled>Next</button>
-      <div id="score">Score: 0 / 0</div>
+<body>
+  <div class="container">
+    <h1>DELE A1 Listening Practice</h1>
+
+    <div id="audio-section">
+      <button id="playAudio">▶️ Play Audio</button>
     </div>
 
-    <div id="choices" class="choices" aria-live="polite"></div>
+    <div id="quiz-section" class="hidden">
+      <h2>Preguntas de comprensión</h2>
+      <div id="question-container"></div>
+      <button id="nextQuestion" class="hidden">Siguiente pregunta</button>
+    </div>
 
-    <p style="margin-top:.8rem;color:#555;font-size:.9rem">
-      Tip: this demo uses your browser’s speech synthesis (no audio files). If your device’s browser supports Spanish voices it will sound more natural.
-    </p>
-  </main>
+    <div id="result-section" class="hidden">
+      <h2>Resultado</h2>
+      <p id="scoreText"></p>
+      <button id="showTranscript">📄 Mostrar Transcripción</button>
+      <button id="nextPassage">➡️ Siguiente Ejercicio</button>
+    </div>
+
+    <div id="transcript-section" class="hidden">
+      <h2>Transcripción</h2>
+      <p id="transcriptText"></p>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
