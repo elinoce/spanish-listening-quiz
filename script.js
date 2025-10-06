@@ -35,16 +35,24 @@ const passages = [
 ];
 
 let current = 0;
+
+const startBtn = document.getElementById("start-btn");
 const showQuestionsBtn = document.getElementById("show-questions");
 const showTranscriptBtn = document.getElementById("show-transcript");
 const transcriptDiv = document.getElementById("transcript");
 const questionsDiv = document.getElementById("questions");
 const nextBtn = document.getElementById("next");
 
+startBtn.onclick = () => {
+  startBtn.classList.add("hidden");
+  document.getElementById("content").classList.remove("hidden");
+  startPassage();
+};
+
 function playAudio(passage, onEnd) {
   const utterance = new SpeechSynthesisUtterance(passage.text);
   utterance.lang = "es-ES";
-  utterance.rate = 0.8; // default slower speed
+  utterance.rate = 0.8; // Slightly slower for A1–A2 listening
   utterance.onend = onEnd;
   speechSynthesis.cancel();
   speechSynthesis.speak(utterance);
@@ -82,11 +90,7 @@ showQuestionsBtn.onclick = () => {
 
 function checkAnswer(questionIndex, selected, btn) {
   const correct = passages[current].questions[questionIndex].answer;
-  if (selected === correct) {
-    btn.style.background = "#28a745";
-  } else {
-    btn.style.background = "#dc3545";
-  }
+  btn.style.background = selected === correct ? "#28a745" : "#dc3545";
 }
 
 showTranscriptBtn.onclick = () => {
@@ -114,6 +118,3 @@ function resetView() {
   questionsDiv.innerHTML = "";
   speechSynthesis.cancel();
 }
-
-// Start automatically when page loads
-window.onload = startPassage;
