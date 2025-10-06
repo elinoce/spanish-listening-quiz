@@ -1,37 +1,69 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DELE A1 Listening Practice</title>
-  <link href="style.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DELE Listening Practice (A1–A2)</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f9fb;
+      color: #222;
+      text-align: center;
+      padding: 20px;
+    }
+    #app {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .hidden { display: none; }
+    .question {
+      margin: 10px 0;
+      text-align: left;
+    }
+    .answers button {
+      display: block;
+      width: 100%;
+      margin: 5px 0;
+      text-align: left;
+    }
+    #transcript {
+      background: #f0f0f0;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+  </style>
 </head>
-
 <body>
-  <div class="container">
-    <h1>DELE A1 Listening Practice</h1>
-
-    <div id="audio-section">
-      <button id="playAudio">▶️ Play Audio</button>
+  <div id="app">
+    <h2>DELE Listening Practice (A1–A2)</h2>
+    <div id="content">
+      <button id="play-audio">▶️ Escuchar</button>
+      <button id="show-questions" class="hidden">Mostrar preguntas</button>
+      <div id="questions" class="hidden"></div>
+      <button id="show-transcript" class="hidden">Mostrar transcripción</button>
+      <div id="transcript" class="hidden"></div>
     </div>
-
-    <div id="quiz-section" class="hidden">
-      <h2>Preguntas de comprensión</h2>
-      <div id="question-container"></div>
-      <button id="nextQuestion" class="hidden">Siguiente pregunta</button>
-    </div>
-
-    <div id="result-section" class="hidden">
-      <h2>Resultado</h2>
-      <p id="scoreText"></p>
-      <button id="showTranscript">📄 Mostrar Transcripción</button>
-      <button id="nextPassage">➡️ Siguiente Ejercicio</button>
-    </div>
-
-    <div id="transcript-section" class="hidden">
-      <h2>Transcripción</h2>
-      <p id="transcriptText"></p>
-    </div>
+    <button id="next" class="hidden">➡️ Siguiente</button>
   </div>
 
   <script src="script.js"></script>
